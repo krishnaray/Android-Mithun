@@ -1,0 +1,59 @@
+package com.lict.bluetoothcontrolapp;
+
+import android.R.bool;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ToggleButton;
+
+public class MainActivity extends Activity {
+	ToggleButton tbtnBluetoothControl;
+	boolean bluetoothState = false;
+	BluetoothAdapter bluetooth;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		bluetooth = BluetoothAdapter.getDefaultAdapter();
+		bluetoothState = bluetooth.isEnabled();
+		tbtnBluetoothControl = (ToggleButton) findViewById(R.id.bluetoothToggleButton);
+		tbtnBluetoothControl.setChecked(bluetoothState);
+		tbtnBluetoothControl.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked)
+					bluetooth.disable();
+				else
+					bluetooth.enable();
+			}
+		});
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+}
