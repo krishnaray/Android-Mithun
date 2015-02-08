@@ -1,6 +1,5 @@
 package com.lict.bluetoothcontrolapp;
 
-import android.R.bool;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
