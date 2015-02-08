@@ -1,0 +1,24 @@
+package com.lict.shakeditectapp.sensors.utils;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+
+public class ShakeDitector implements SensorEventListener{
+
+	public interface OnShakeListener {
+        public void onShake(int count);
+    }
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

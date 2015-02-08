@@ -1,0 +1,72 @@
+package com.lict.shakeditectapp;
+
+import com.lict.shakeditectapp.sensors.utils.OnShakeListener;
+import com.lict.shakeditectapp.sensors.utils.ShakeDitector;
+
+import android.R.integer;
+import android.app.Activity;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+	TextView tvShakeInfo;
+	SensorManager sensorManager;
+	Sensor accelSensor; 
+	
+	ShakeDitector mShakeDitector;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		initializeAll();
+		mShakeDitector.setOnShakeListener(new OnShakeListener() {
+			@Override
+			public void onShake(int count) {
+				tvShakeInfo.setText("Shake: "+ Integer.toString(count));
+				Toast.makeText(getApplicationContext(), "Shake: "+ Integer.toString(count), Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+	
+	@Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(mShakeDitector, accelSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+	@Override
+	protected void onStop() {
+		super.onStop();
+		 sensorManager.unregisterListener(mShakeDitector, accelSensor);
+	}
+	private void initializeAll() {
+		tvShakeInfo = (TextView) findViewById(R.id.shakeInfoTextView);
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		mShakeDitector = new ShakeDitector();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+}

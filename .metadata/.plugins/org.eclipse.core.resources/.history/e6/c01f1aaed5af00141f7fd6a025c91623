@@ -1,0 +1,7 @@
+package com.lict.shakeditectapp.sensors.utils;
+
+import android.hardware.SensorEventListener;
+
+public class ShakeDitector implements SensorEventListener{
+
+}
