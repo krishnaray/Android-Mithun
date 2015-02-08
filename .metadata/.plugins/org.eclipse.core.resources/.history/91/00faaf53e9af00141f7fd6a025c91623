@@ -1,0 +1,97 @@
+package com.javatechig.customizedlist;
+
+import java.util.ArrayList;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.Toast;
+import com.example.customizedlist.R;
+
+public class MainActivity extends Activity {
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		ArrayList<NewsItem> image_details = getListData();
+		final ListView lv1 = (ListView) findViewById(R.id.custom_list);
+		lv1.setAdapter(new CustomListAdapter(this, image_details));
+		lv1.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+				Object o = lv1.getItemAtPosition(position);
+				NewsItem newsData = (NewsItem) o;
+				Toast.makeText(MainActivity.this, "Selected :" + " " + newsData,
+						Toast.LENGTH_LONG).show();
+			}
+
+		});
+
+	}
+
+	private ArrayList<NewsItem> getListData() {
+		ArrayList<NewsItem> results = new ArrayList<NewsItem>();
+		NewsItem newsData = new NewsItem();
+		newsData.setHeadline("Military loyal to Constitution: ISPR");
+		newsData.setReporterName("bdnews24.com");
+		newsData.setDate("2015-02-09 00:37:11");
+		newsData.setUrl("http://d30fl32nd2baj9.cloudfront.net/media/2015/02/08/army.jpg/ALTERNATES/w620/Army.jpg");
+		results.add(newsData);
+
+		newsData = new NewsItem();
+		newsData.setHeadline("Business in protest against blockade");
+		newsData.setReporterName("bdnews24.com");
+		newsData.setDate("2015-02-09 00:37:11");
+		newsData.setUrl("http://d30fl32nd2baj9.cloudfront.net/media/2015/02/08/53_businessman-human-chain_motijheel_08022015_13.jpg/ALTERNATES/w80/53_businessman+human+chain_Motijheel_08022015_13.jpg");
+		results.add(newsData);
+
+		newsData = new NewsItem();
+		newsData.setHeadline("Malaysia win Gold Cup");
+		newsData.setReporterName("bdnews24.com");
+		newsData.setDate("2015-02-09 00:37:11");
+		newsData.setUrl("http://d30fl32nd2baj9.cloudfront.net/media/2015/02/08/bangladesh-1.jpg/ALTERNATES/w80/Bangladesh+1.jpg");
+		results.add(newsData);
+
+		newsData = new NewsItem();
+		newsData.setHeadline("Politics without ideals");
+		newsData.setReporterName("bdnews24.com");
+		newsData.setDate("2015-02-09 00:37:11");
+		newsData.setUrl("http://d30fl32nd2baj9.cloudfront.net/media/2015/01/09/ju-img_2.jpg/ALTERNATES/w220/JU-IMG_2.jpg");
+		results.add(newsData);
+
+		newsData = new NewsItem();
+		newsData.setHeadline("Hartals are not enjoyable at all!");
+		newsData.setReporterName("bdnews24.com");
+		newsData.setDate("2015-02-09 00:37:11");
+		newsData.setUrl("http://d30fl32nd2baj9.cloudfront.net/media/2015/02/08/23ttg4ps.jpg/ALTERNATES/w175/23ttg4ps.jpg");
+		results.add(newsData);
+
+		newsData = new NewsItem();
+		newsData.setHeadline("Gandalf turns into Sherlock");
+		newsData.setReporterName("bdnews24.com");
+		newsData.setDate("2015-02-09 00:37:11");
+		newsData.setUrl("http://d30fl32nd2baj9.cloudfront.net/media/2015/02/08/ent.jpg/ALTERNATES/w175/ent.jpg");
+		results.add(newsData);
+
+		newsData = new NewsItem();
+		newsData.setHeadline("Danger zones in Rangpur identified");
+		newsData.setReporterName("bdnews24.com");
+		newsData.setDate("2015-02-09 00:37:11");
+		newsData.setUrl("http://d30fl32nd2baj9.cloudfront.net/media/2014/05/19/rab-police-1.jpg/ALTERNATES/w175/RAB-Police-1.jpg");
+		results.add(newsData);
+
+		newsData = new NewsItem();
+		newsData.setHeadline("জমি ও খরচ দিলে ভবন সরাবে বিজিএমইএ");
+		newsData.setReporterName("Pankaj Gupta");
+		newsData.setDate("May 26, 2013, 13:35");
+		newsData.setUrl("http://lh5.ggpht.com/_hepKlJWopDg/TB-_WXikaYI/AAAAAAAAElI/715k4NvBM4w/s144-c/IMG_0075.JPG");
+		results.add(newsData);
+
+		return results;
+	}
+}
