@@ -1,0 +1,5 @@
+package com.lict.proximityapp.sensors.utils;
+
+public interface OnShakeListener {
+	public void onShake(int count);
+}

@@ -1,0 +1,32 @@
+package com.lict.proximityapp.sensors.utils;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.util.FloatMath;
+
+public class proximityDitector implements SensorEventListener{
+	private static final float PROXIMITY_THRESHOLD = 1.0f;
+	static float proximityExisting = 0;
+    private OnProximityChangeListener mProximityChangeListener;
+    
+    public void setOnShakeListener(OnProximityChangeListener listener) {
+    	mProximityChangeListener = listener;
+    }
+	
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		if(mProximityChangeListener != null){
+			float proximityVal = event.values[0];
+            mProximityChangeListener.onChange(proximityVal);
+		}
+	}
+
+}

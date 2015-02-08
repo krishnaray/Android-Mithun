@@ -1,0 +1,47 @@
+package com.lict.proximityapp.sensors.utils;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.util.FloatMath;
+
+public class proximityDitector implements SensorEventListener{
+	private static final float PROXIMITY_THRESHOLD = 1;
+    private OnProximityChangeListener mProximityChangeListener;
+    private long mShakeTimestamp;
+    private int mShakeCount;
+    
+    public void setOnShakeListener(OnProximityChangeListener listener) {
+    	mProximityChangeListener = listener;
+    }
+	
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		if(mProximityChangeListener != null){
+			float proximityVal = event.values[0];
+            if(gForce > SHAKE_THRESHOLD_GRAVITY){
+            	final long timeNow = System.currentTimeMillis();
+                // ignore shake events too close to each other (500ms)
+                if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > timeNow ) {
+                    return;
+                }
+                // reset the shake count after 3 seconds of no shakes
+                if (mShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < timeNow ) {
+                    mShakeCount = 0;
+                }
+                mShakeTimestamp = timeNow;
+                mShakeCount++;
+
+                mProximityChangeListener.onShake(mShakeCount);
+            }
+		}
+	}
+
+}

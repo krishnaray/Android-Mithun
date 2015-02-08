@@ -1,0 +1,73 @@
+package com.lict.proximityapp;
+
+import com.lict.proximityapp.sensors.utils.OnProximityChangeListener;
+import com.lict.proximityapp.sensors.utils.ProximityDitector;
+import com.lict.shakeditectapp.R;
+
+import android.app.Activity;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+	TextView tvShakeInfo;
+	SensorManager sensorManager;
+	Sensor proximitySensor; 
+	
+	ProximityDitector mProximityDitector;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		initializeAll();
+		mProximityDitector.setOnShakeListener(new OnProximityChangeListener() {
+			
+			@Override
+			public void onChange(float distanceInCentimeters) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	@Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(mProximityDitector, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+	@Override
+	protected void onStop() {
+		super.onStop();
+		 sensorManager.unregisterListener(mProximityDitector, proximitySensor);
+	}
+	private void initializeAll() {
+		tvShakeInfo = (TextView) findViewById(R.id.shakeInfoTextView);
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+		mProximityDitector = new ProximityDitector();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+}
